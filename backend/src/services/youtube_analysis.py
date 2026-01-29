@@ -44,6 +44,17 @@ def run_youtube_analysis(youtube_input: str, video_count: int = 8) -> Dict[str, 
     # Analysis layer (benchmarks + tiering)
     analysis = build_analysis(report)
 
+    # Map backend metrics to frontend expected format
+    metrics = {
+        "mean_views": report.get("mean_views"),
+        "median_views": report.get("median_views"),
+        "engagement_rate": report.get("engagement_rate_percent"),
+        "like_rate": report.get("like_rate_percent"),
+        "comment_rate": report.get("comment_rate_percent"),
+        "volatility_ratio": report.get("volatility_ratio"),
+        "risk_level": report.get("risk_level"),
+    }
+
     return {
         "channel": {
             "channel_id": channel.get("channel_id", ""),
@@ -54,6 +65,7 @@ def run_youtube_analysis(youtube_input: str, video_count: int = 8) -> Dict[str, 
             "uploads_playlist_id": channel.get("uploads_playlist_id", ""),
         },
         "videos": videos,                 # raw list for frontend charting
-        "metrics_report": report,         # computed rollups
+        "metrics": metrics,               # frontend-compatible metrics
+        "metrics_report": report,         # full computed rollups (for advanced use)
         "analysis": analysis,             # benchmark comparisons + tiering
     }
