@@ -44,6 +44,7 @@ pip install -r requirements.txt
 export YOUTUBE_API_KEY=your_youtube_api_key_here
 # On Windows:
 # set YOUTUBE_API_KEY=your_youtube_api_key_here
+set YOUTUBE_API_KEY="AIzaSyC8sBmAi020_K3ERy-N4Rw0hDOArJJMWwo"
 
 # Start backend
 uvicorn app.main:app --reload --port 8000
