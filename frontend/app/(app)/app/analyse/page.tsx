@@ -7,6 +7,7 @@ import ViewsChart from "@/components/report/ViewsChart";
 import EngagementChart from "@/components/report/EngagementChart";
 import VideoTable from "@/components/report/VideoTable";
 import MetricsSummary from "@/components/report/MetricsSummary";
+import LiveStreamPerformance from "@/components/report/LiveStreamPerformance";
 import { FileText } from "lucide-react";
 
 type ApiChannel = {
@@ -24,6 +25,16 @@ type ApiVideo = {
   likes: number;
   comments: number;
   duration: string;
+  isLive?: boolean;
+};
+
+type LiveMetrics = {
+  mean_views?: number;
+  median_views?: number;
+  engagement_rate?: number;
+  like_rate?: number;
+  comment_rate?: number;
+  total_streams?: number;
 };
 
 type ApiMetrics = {
@@ -40,6 +51,8 @@ type ApiResponse = {
   channel: ApiChannel;
   videos?: ApiVideo[];
   metrics?: ApiMetrics;
+  live_streams?: ApiVideo[];
+  live_metrics?: LiveMetrics;
 };
 
 function safeNum(x: unknown): number | undefined {
@@ -448,6 +461,14 @@ export default function AnalysePage() {
 
               <VideoTable videos={data.videos} />
             </>
+          )}
+
+          {/* Live Stream Performance */}
+          {data.live_streams && data.live_streams.length > 0 && (
+            <LiveStreamPerformance
+              liveStreams={data.live_streams}
+              liveMetrics={data.live_metrics}
+            />
           )}
         </div>
       )}
