@@ -227,6 +227,11 @@ def get_recent_videos(playlist_id: str, count: int = 8) -> List[Dict[str, Any]]:
             stats = item.get("statistics", {})
             content = item.get("contentDetails", {})
 
+            # Skip live streams and upcoming live videos
+            live_broadcast_content = snippet.get("liveBroadcastContent", "none")
+            if live_broadcast_content in ["live", "upcoming"]:
+                continue
+
             published_at = snippet.get("publishedAt", "")
 
             video_data.append(
