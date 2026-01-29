@@ -32,8 +32,8 @@ export default function VideoFormatChart({ videos }: Props) {
   };
 
   // Categorize videos
-  const shortVideos = videos.filter((v) => parseDuration(v.duration) < 420); // < 7 minutes
-  const longVideos = videos.filter((v) => parseDuration(v.duration) >= 420); // >= 7 minutes
+  const shortVideos = videos.filter((v) => parseDuration(v.duration) < 420); // less than 7 minutes
+  const longVideos = videos.filter((v) => parseDuration(v.duration) >= 420); // 7 minutes or more
 
   const shortCount = shortVideos.length;
   const longCount = longVideos.length;
@@ -51,13 +51,13 @@ export default function VideoFormatChart({ videos }: Props) {
 
   const chartData = [
     {
-      name: "Short-form (<7 min)",
+      name: "Short-form (under 7 min)",
       value: shortCount,
       avgViews: shortAvgViews,
       percentage: ((shortCount / total) * 100).toFixed(1),
     },
     {
-      name: "Long-form (≥7 min)",
+      name: "Long-form (7+ min)",
       value: longCount,
       avgViews: longAvgViews,
       percentage: ((longCount / total) * 100).toFixed(1),
@@ -144,7 +144,7 @@ export default function VideoFormatChart({ videos }: Props) {
               }}
             >
               <div className="flex items-center justify-between mb-2">
-                <div className="text-sm font-medium opacity-80">Short-form (<7 min)</div>
+                <div className="text-sm font-medium opacity-80">Short-form (under 7 min)</div>
                 <div
                   className="w-3 h-3 rounded-full"
                   style={{ background: COLORS[0] }}
@@ -173,7 +173,7 @@ export default function VideoFormatChart({ videos }: Props) {
               }}
             >
               <div className="flex items-center justify-between mb-2">
-                <div className="text-sm font-medium opacity-80">Long-form (≥7 min)</div>
+                <div className="text-sm font-medium opacity-80">Long-form (7+ min)</div>
                 <div
                   className="w-3 h-3 rounded-full"
                   style={{ background: COLORS[1] }}
