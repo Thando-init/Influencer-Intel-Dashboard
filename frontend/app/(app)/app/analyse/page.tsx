@@ -8,6 +8,8 @@ import EngagementChart from "@/components/report/EngagementChart";
 import VideoTable from "@/components/report/VideoTable";
 import MetricsSummary from "@/components/report/MetricsSummary";
 import LiveStreamPerformance from "@/components/report/LiveStreamPerformance";
+import VideoFormatChart from "@/components/report/VideoFormatChart";
+import MetricsExplanation from "@/components/report/MetricsExplanation";
 import { FileText } from "lucide-react";
 
 type ApiChannel = {
@@ -459,6 +461,8 @@ export default function AnalysePage() {
 
               <EngagementChart videos={data.videos} />
 
+              <VideoFormatChart videos={data.videos} />
+
               <VideoTable videos={data.videos} />
             </>
           )}
@@ -470,6 +474,9 @@ export default function AnalysePage() {
               liveMetrics={data.live_metrics}
             />
           )}
+
+          {/* Metrics Explanation */}
+          <MetricsExplanation />
         </div>
       )}
     </div>
