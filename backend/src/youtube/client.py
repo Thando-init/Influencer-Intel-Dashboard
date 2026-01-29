@@ -318,11 +318,18 @@ def get_live_streams(playlist_id: str, count: int = 25) -> List[Dict[str, Any]]:
             # Only include live streams (current, upcoming, or completed)
             if live_broadcast_content != "none":
                 published_at = snippet.get("publishedAt", "")
+                view_count = int(stats.get("viewCount", 0))
+                
+                # Debug logging
+                print(f"[Live Stream] {snippet.get('title', 'Unknown')[:50]}")
+                print(f"  Status: {live_broadcast_content}")
+                print(f"  Views: {view_count}")
+                print(f"  Stats available: {list(stats.keys())}")
                 
                 live_streams.append({
                     "title": snippet.get("title", ""),
                     "publishedAt": published_at,
-                    "views": int(stats.get("viewCount", 0)),
+                    "views": view_count,
                     "likes": int(stats.get("likeCount", 0)),
                     "comments": int(stats.get("commentCount", 0)),
                     "duration": content.get("duration", ""),

@@ -21,6 +21,7 @@ export type Analysis = {
   // Key metrics (store the essentials for MVP)
   medianViews?: number;
   averageViews?: number;
+  riskLevel?: string;
 
   // Pricing inputs (NEW)
   clientCurrency?: string; // e.g. "ZAR"

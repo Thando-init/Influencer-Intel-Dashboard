@@ -4,8 +4,11 @@ import { useAnalysis } from "@/context/AnalysisContext";
 import { Bookmark, Trash2, ExternalLink, AlertCircle } from "lucide-react";
 
 export default function SavedPage() {
-  const { analyses, setActive, deleteAnalysis, getActive } = useAnalysis();
+  const { state, setActive, removeAnalysis, getActive } = useAnalysis();
   const activeAnalysis = getActive();
+  
+  // Convert state to analyses array
+  const analyses = state.recentIds.map(id => state.byId[id]).filter(Boolean);
 
   const formatNumber = (num?: number) => {
     if (num === undefined || num === null) return "—";
@@ -132,7 +135,7 @@ export default function SavedPage() {
                             `Delete analysis for ${analysis.channelName}?`
                           )
                         ) {
-                          deleteAnalysis(analysis.id);
+                          removeAnalysis(analysis.id);
                         }
                       }}
                       className="p-2 rounded-lg hover:bg-[var(--muted)] transition"

@@ -139,6 +139,7 @@ export default function AnalysePage() {
         subscribers: json.channel.subscribers,
         medianViews,
         averageViews,
+        riskLevel: json.metrics?.risk_level,
         createdAt,
 
         // Pricing inputs persisted for calculator + later
