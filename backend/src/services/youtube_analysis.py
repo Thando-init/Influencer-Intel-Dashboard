@@ -29,6 +29,11 @@ def run_youtube_analysis(youtube_input: str, video_count: int = 8) -> Dict[str, 
 
     videos = get_recent_videos(channel.get("uploads_playlist_id", ""), count=video_count)
     live_streams = get_live_streams(channel.get("uploads_playlist_id", ""), count=25)
+    
+    # Debug: Log videos being analyzed
+    print(f"\n[ANALYSIS DEBUG] Analyzing {len(videos)} videos for {channel.get('channel_name', 'Unknown')}")
+    for i, v in enumerate(videos, 1):
+        print(f"  {i}. {v.get('title', 'Unknown')[:50]} - {v.get('views', 0):,} views")
 
     # Metrics layer for regular videos
     metrics_obj = InfluencerMetrics(
@@ -41,6 +46,12 @@ def run_youtube_analysis(youtube_input: str, video_count: int = 8) -> Dict[str, 
     report = metrics_obj.get_performance_report()
     if not report:
         raise ValueError("No video data returned for this channel (or playlist is empty).")
+    
+    # Debug: Log calculated metrics
+    print(f"\n[METRICS DEBUG] Calculated Results:")
+    print(f"  Median Views: {report.get('median_views', 0):,}")
+    print(f"  Average Views: {report.get('mean_views', 0):,}")
+    print(f"  Sample Size: {report.get('sample_size', 0)} videos\n")
 
     # Analysis layer (benchmarks + tiering)
     analysis = build_analysis(report)
