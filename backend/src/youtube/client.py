@@ -181,7 +181,7 @@ def get_channel_stats(channel_input: str) -> Optional[Dict[str, Any]]:
 
 def get_recent_videos(playlist_id: str, count: int = 8) -> List[Dict[str, Any]]:
     """
-    Returns the most recent `count` videos with stable ordering.
+    Returns the most recent `count` regular videos (excluding live streams).
 
     Each item:
     {
@@ -221,36 +221,120 @@ def get_recent_videos(playlist_id: str, count: int = 8) -> List[Dict[str, Any]]:
         )
         stats_response = stats_request.execute()
 
-        video_data: List[Dict[str, Any]] = []
+        regular_videos: List[Dict[str, Any]] = []
+        live_streams: List[Dict[str, Any]] = []
+        
         for item in stats_response.get("items", []):
             snippet = item.get("snippet", {})
             stats = item.get("statistics", {})
             content = item.get("contentDetails", {})
 
-            # Skip live streams and upcoming live videos
             live_broadcast_content = snippet.get("liveBroadcastContent", "none")
-            if live_broadcast_content in ["live", "upcoming"]:
-                continue
-
             published_at = snippet.get("publishedAt", "")
 
-            video_data.append(
-                {
+            video_obj = {
+                "title": snippet.get("title", ""),
+                "publishedAt": published_at,
+                "views": int(stats.get("viewCount", 0)),
+                "likes": int(stats.get("likeCount", 0)),
+                "comments": int(stats.get("commentCount", 0)),
+                "duration": content.get("duration", ""),
+            }
+
+            # Separate live streams from regular videos
+            if live_broadcast_content in ["live", "upcoming"]:
+                video_obj["isLive"] = True
+                live_streams.append(video_obj)
+            else:
+                regular_videos.append(video_obj)
+
+        def _parse_dt(iso_str: str) -> datetime:
+            return datetime.fromisoformat(iso_str.replace("Z", "+00:00"))
+
+        regular_videos.sort(key=lambda x: _parse_dt(x["publishedAt"]), reverse=True)
+
+        return regular_videos[:count]
+
+    except HttpError as e:
+        print(f"[YouTube API HttpError] {e}")
+        return []
+    except Exception as e:
+        print(f"[YouTube API Error] {e}")
+        return []
+
+
+def get_live_streams(playlist_id: str, count: int = 25) -> List[Dict[str, Any]]:
+    """
+    Returns live streams and past live broadcasts from the uploads playlist.
+
+    Each item:
+    {
+        "title": str,
+        "publishedAt": str (ISO),
+        "views": int,
+        "likes": int,
+        "comments": int,
+        "duration": str (ISO 8601 duration),
+        "isLive": bool
+    }
+    """
+    youtube = _get_youtube_client()
+
+    if not playlist_id:
+        return []
+
+    try:
+        playlist_request = youtube.playlistItems().list(
+            part="contentDetails",
+            playlistId=playlist_id,
+            maxResults=50,  # Get more to find live streams
+        )
+        playlist_response = playlist_request.execute()
+
+        video_ids = [
+            item["contentDetails"]["videoId"]
+            for item in playlist_response.get("items", [])
+            if item.get("contentDetails", {}).get("videoId")
+        ]
+
+        if not video_ids:
+            return []
+
+        stats_request = youtube.videos().list(
+            part="statistics,snippet,contentDetails",
+            id=",".join(video_ids),
+        )
+        stats_response = stats_request.execute()
+
+        live_streams: List[Dict[str, Any]] = []
+        
+        for item in stats_response.get("items", []):
+            snippet = item.get("snippet", {})
+            stats = item.get("statistics", {})
+            content = item.get("contentDetails", {})
+
+            live_broadcast_content = snippet.get("liveBroadcastContent", "none")
+            
+            # Only include live streams (current, upcoming, or completed)
+            if live_broadcast_content != "none":
+                published_at = snippet.get("publishedAt", "")
+                
+                live_streams.append({
                     "title": snippet.get("title", ""),
                     "publishedAt": published_at,
                     "views": int(stats.get("viewCount", 0)),
                     "likes": int(stats.get("likeCount", 0)),
                     "comments": int(stats.get("commentCount", 0)),
                     "duration": content.get("duration", ""),
-                }
-            )
+                    "isLive": live_broadcast_content in ["live", "upcoming"],
+                })
 
         def _parse_dt(iso_str: str) -> datetime:
             return datetime.fromisoformat(iso_str.replace("Z", "+00:00"))
 
-        video_data.sort(key=lambda x: _parse_dt(x["publishedAt"]), reverse=True)
+        live_streams.sort(key=lambda x: _parse_dt(x["publishedAt"]), reverse=True)
 
-        return video_data[:count]
+        return live_streams[:count]
 
     except HttpError as e:
         print(f"[YouTube API HttpError] {e}")
