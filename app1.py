@@ -977,8 +977,7 @@ if run and creator_url:
 #     col1.metric("Subscribers", f"{channel['subscribers']:,}")
 #     col2.metric("Average Views (8 videos)", f"{report['mean_views']:,}")
 #     col3.metric("Median Views", f"{report['median_views']:,}")
-#     col4.metric("Dashboard Score", metrics.dashboard_score, metrics.dashboard_interpretation)
-
+#     colc4.metric("Dashboard Score", metrics.dashboard_score, metrics.dashboard_interpretation)
 #     # ---------------- DATAFRAME ----------------
 #     df = pd.DataFrame(videos)
 #     df["published_date"] = pd.to_datetime(df["publishedAt"])
@@ -1062,10 +1061,7 @@ if run and creator_url:
 #     col3.metric("CPM", metrics.calculate_CPM(client_cost))
 #     col4.metric("Engagement-Adjusted CPM", metrics.calculate_engagement_adjusted_CPM(client_cost))
 
-#     # ---------------- AI SUMMARY ----------------
-#     with st.expander("AI Performance Summary"):
-#         ai = metrics.get_ai_analysis()
-#         st.write(ai.get("summary", "AI analysis unavailable."))
+#     
 
 #     # ---------------- EXPORT REPORT ----------------
 #     st.subheader("Export Dashboard Report")
@@ -1080,7 +1076,7 @@ if run and creator_url:
 #             "CPM": metrics.calculate_CPM(client_cost),
 #             "engagement_adjusted_CPM": metrics.calculate_engagement_adjusted_CPM(client_cost)
 #         },
-#         "AI_summary": ai
+
 #     }
 #     st.download_button(
 #         label="Download Report as JSON",

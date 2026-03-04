@@ -21,12 +21,12 @@ type ApiResponse = {
     comments: number;
     duration: string;
   }>;
-  metrics?: {
+    metrics_report?: {
     mean_views?: number;
     median_views?: number;
-    engagement_rate?: number;
-    like_rate?: number;
-    comment_rate?: number;
+    engagement_rate_percent?: number;
+    like_rate_percent?: number;
+    comment_rate_percent?: number;
     volatility_ratio?: number;
     risk_level?: string;
   };
@@ -87,8 +87,8 @@ export default function AnalysePage() {
       const createdAt = new Date().toISOString();
       const id = `${Date.now()}`;
 
-      const medianViews = safeNum(json.metrics?.median_views);
-      const averageViews = safeNum(json.metrics?.mean_views);
+      const medianViews = safeNum(json.metrics_report?.median_views);
+      const averageViews = safeNum(json.metrics_report?.mean_views);
 
       const feeNum =
         quotedFeeClient.trim() === "" ? undefined : Number(quotedFeeClient);

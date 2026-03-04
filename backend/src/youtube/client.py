@@ -100,7 +100,7 @@ def get_channel_stats(channel_input: str) -> Optional[Dict[str, Any]]:
         if id_type == "handle":
             request = youtube.channels().list(
                 part="snippet,statistics,contentDetails",
-                forHandle=identifier,
+                forHandle=identifier.lstrip("@"),
             )
             channel_url = f"https://www.youtube.com/@{identifier.lstrip('@')}"
 

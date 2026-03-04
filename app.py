@@ -707,7 +707,7 @@ if run and creator_url:
 # import pandas as pd
 # import altair as alt
 # from datetime import datetime
-# import json
+# 
 
 # from src.youtube.client import get_channel_stats, get_recent_videos
 # from src.metrics.metrics import InfluencerMetrics
@@ -851,10 +851,7 @@ if run and creator_url:
 #     col3.metric("CPM", metrics.calculate_CPM(client_cost))
 #     col4.metric("Engagement-Adjusted CPM", metrics.calculate_engagement_adjusted_CPM(client_cost))
 
-#     # ---------------- AI SUMMARY ----------------
-#     with st.expander("AI Performance Summary"):
-#         ai = metrics.get_ai_analysis()
-#         st.write(ai.get("summary", "AI analysis unavailable."))
+# 
 
 #     # ---------------- EXPORT REPORT ----------------
 #     st.subheader("Export Dashboard Report")
@@ -869,7 +866,7 @@ if run and creator_url:
 #             "CPM": metrics.calculate_CPM(client_cost),
 #             "engagement_adjusted_CPM": metrics.calculate_engagement_adjusted_CPM(client_cost)
 #         },
-#         "AI_summary": ai
+
 #     }
 #     st.download_button(
 #         label="Download Report as JSON",

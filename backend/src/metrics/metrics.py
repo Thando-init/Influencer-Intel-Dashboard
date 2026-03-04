@@ -240,6 +240,14 @@ class InfluencerMetrics:
             return "Average"
         return "Weak"
 
+    @property
+    def dashboard_score(self) -> float:
+        return self._dashboard_score(self.get_performance_report())
+
+    @property
+    def dashboard_interpretation(self) -> str:
+        return self._dashboard_interpretation(self.dashboard_score)
+
     # ---------------- HELPERS ----------------
     @staticmethod
     def _to_int(val: Any, default: int = 0) -> int:

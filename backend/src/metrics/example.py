@@ -1,6 +1,6 @@
 # src/metrics/example.py
 
-from metrics.metrics import InfluencerMetrics
+from src.metrics.metrics import InfluencerMetrics
 import os
 from datetime import datetime, timedelta, timezone
 
