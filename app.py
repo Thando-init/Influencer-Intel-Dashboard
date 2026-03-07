@@ -3,9 +3,9 @@ import pandas as pd
 import altair as alt
 from datetime import datetime
 
-from backend.src.youtube.client import get_channel_stats, get_recent_videos
-from backend.src.metrics.metrics import InfluencerMetrics
-from backend.src.analysis.analyser import get_creator_tier
+from src.youtube.client import get_channel_stats, get_recent_videos
+from src.metrics.metrics import InfluencerMetrics
+from src.analysis.analyser import get_creator_tier
 
 # ---------------- THEME TOGGLE ----------------
 # theme = st.sidebar.radio("Theme", ["Light", "Dark"])
