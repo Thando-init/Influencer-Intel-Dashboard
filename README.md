@@ -1,144 +1,345 @@
-## Influencer Intelligence Dashboard
+# 📊 Influencer Intel Dashboard
 
-A data-driven analytics dashboard for evaluating YouTube creators using performance metrics, engagement quality, audience loyalty, monetisation indicators, and benchmark-based analysis.
+An interactive analytics dashboard built with **Python**, **Streamlit**, and **Pandas** to help influencer marketers and content creators analyse YouTube channel performance, uncover audience insights, and make data-driven decisions.
 
-This project is designed to support influencer campaign planning, creator vetting, and performance reporting for agencies, brands, and talent managers.
+This project began as a data analytics application and is now being continuously evolved as part of my **Cloud Engineering** learning journey. Future iterations will focus on containerization, cloud deployment on AWS, infrastructure automation, monitoring, and cloud cost optimization (FinOps).
 
-## Features
+---
 
-- YouTube creator performance analysis
-- Mean vs median view distribution diagnostics
-- Engagement and audience loyalty metrics
-- Risk and anti-fraud signal detection
-- Benchmark tier comparison based on subscriber count
-- Monetisation metrics (CPM, CPE, CPV, talent cost)
-- AI-assisted performance summaries (optional)
-- Interactive Streamlit dashboard with charts
-- Streamlit Cloud deployment ready
+## 🎯 Project Overview
 
-## Architecture Overview
-.
-├── app.py                      Streamlit application entry point
-├── requirements.txt            Python dependencies
-├── README.md
-├── src/
-│   ├── metrics/
-│   │   ├── metrics.py          Core metric calculations
-│   │   └── example.py          Local testing harness
-│   ├── analysis/
-│   │   ├── benchmarks.py       Industry benchmark tiers
-│   │   └── analyser.py         Comparative analysis logic
-│   └── ai/
-│       └── openai_utils.py     AI scoring utilities
+Influencer Intel Dashboard provides a clean and interactive interface for exploring YouTube analytics data. It transforms raw datasets into meaningful visualisations and key performance indicators (KPIs), making it easier to evaluate channel growth, audience engagement, and content performance.
 
-## Key Metrics Calculated
+The project demonstrates practical skills in:
 
-- Performance
-- Mean views
-- Median views
-- View volatility and risk classification
-- Short-form vs long-form content mix
-- View velocity (last 7 days)
-- Engagement Quality
-- Engagement rate
-- Like rate
-- Comment rate
-- Engagement consistency
-- Loyalty (views-to-subscriber ratio)
+- Data analysis
+- Data visualization
+- Dashboard development
+- Python programming
+- Business intelligence
+- Software engineering fundamentals
 
-- Monetisation
-    CPM (Cost per 1,000 views)
-    CPE (Cost per engagement)
-    CPV (Cost per view)
-    Talent cost after agency margin
-    Engagement-adjusted CPM
-    Benchmarking System
+As I progress through Cloud Engineering, this repository will continue evolving into a cloud-native analytics platform.
 
-- Creators are evaluated against tier-specific benchmarks based on subscriber count:
+---
 
-    1. Nano
-    2. Micro
-    3. Mid-tier
-    4. Macro
-    5. Mega
+## ✨ Features
 
-Each tier defines expected engagement and loyalty ranges, enabling comparative analysis such as:
+- 📈 Interactive analytics dashboard
+- 📊 Key Performance Indicators (KPIs)
+- 📉 Data visualisations using Plotly
+- 🔍 Interactive filtering and exploration
+- 🧹 Data cleaning and preprocessing with Pandas
+- 📁 CSV dataset support
+- ⚡ Fast and responsive Streamlit interface
 
-- Above benchmark
-- Within benchmark
-- Below benchmark
+---
 
-## AI Analysis (Optional)
+## 🛠️ Tech Stack
 
-The system can optionally generate:
+### Current Technologies
 
-1. A 0–100 performance score
-2. A short qualitative summary of strengths and risks
+- Python
+- Streamlit
+- Pandas
+- NumPy
+- Plotly
 
-If no OpenAI API quota is available, the dashboard falls back to a deterministic scoring model.
+### Planned Technologies
 
-## Local Development
-Requirements
+- Docker
+- AWS ECS (Fargate)
+- Amazon ECR
+- Amazon S3
+- Amazon RDS (PostgreSQL)
+- GitHub Actions
+- Amazon CloudWatch
+- AWS CloudFormation
+- Terraform
 
-    - Python 3.9+
-    - pip
+---
 
-## Setup
-git clone git@gitlab.com:Tay-Cheeks/influencer-intel-hub.git
-cd influencer-intel-hub
+## 📂 Project Structure
+
+```text
+Influencer-Intel-Dashboard/
+│
+├── pages/                  # Streamlit pages
+├── assets/                 # Images and static assets
+├── data/                   # Sample datasets
+├── Home.py                 # Main Streamlit application
+├── requirements.txt
+├── Dockerfile
+├── .dockerignore
+└── README.md
+```
+
+---
+
+## 🚀 Getting Started
+
+### Clone the repository
+
+```bash
+git clone https://github.com/Thando-init/Influencer-Intel-Dashboard.git
+cd Influencer-Intel-Dashboard
+```
+
+### Create a virtual environment
+
+```bash
+python -m venv .venv
+```
+
+Activate it:
+
+Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+macOS/Linux
+
+```bash
+source .venv/bin/activate
+```
+
+### Install dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-Environment Variables
+### Run the application
 
-Create a .env file locally or set system environment variables:
+```bash
+streamlit run Home.py
+```
 
-- OPENAI_API_KEY=your_openai_key
-- YOUTUBE_API_KEY=your_youtube_key
+---
 
-Running Locally
-streamlit run app.py
+## 🐳 Running with Docker
 
+Build the Docker image:
 
-The app will be available at:
+```bash
+docker build -t influencer-intel-dashboard .
+```
 
+Run the container:
+
+```bash
+docker run -p 8501:8501 influencer-intel-dashboard
+```
+
+Then open:
+
+```
 http://localhost:8501
+```
 
-## Streamlit Cloud Deployment
+---
 
-This repository is compatible with Streamlit Cloud.
+# ☁️ Cloud Engineering Roadmap
 
-Deployment requirements:
+This project is being continuously evolved as part of my Cloud Engineering learning journey.
 
-- app.py at repository root
-- requirements.txt present
+Rather than treating this as a once-off dashboard, my goal is to progressively transform it into a scalable cloud-native analytics platform by applying concepts learned through AWS and modern cloud-native development.
 
-Secrets configured in Streamlit Cloud settings
+Future iterations will focus on:
 
-Secrets format:
+- Containerization
+- AWS deployment
+- Infrastructure as Code
+- Monitoring
+- CI/CD
+- Cloud cost optimization (FinOps)
 
-    OPENAI_API_KEY="your_openai_key"
-    YOUTUBE_API_KEY="your_youtube_key"
+---
 
-Intended Use
+# 🏗️ Current Architecture
 
-This tool is intended for:
+```text
+                   +----------------------+
+                   |   YouTube Dataset    |
+                   |    CSV / Excel       |
+                   +----------+-----------+
+                              |
+                              |
+                              v
+                   +----------------------+
+                   |      Pandas          |
+                   | Data Cleaning & ETL  |
+                   +----------+-----------+
+                              |
+                              |
+                              v
+                   +----------------------+
+                   | Business Analytics   |
+                   | KPI Calculations     |
+                   +----------+-----------+
+                              |
+                              |
+                              v
+                   +----------------------+
+                   |     Streamlit UI     |
+                   | Interactive Dashboard|
+                   +----------+-----------+
+                              |
+                              |
+                              v
+                           End User
+```
 
-1. Influencer marketing agencies
-2. Campaign managers
-3. Brand partnerships teams
-4. Creator performance audits
-5. Pre-campaign vetting and post-campaign reviews
+---
 
-It is not intended to scrape private creator data or bypass platform permissions.
+# ☁️ Planned AWS Cloud Architecture
 
-## Roadmap
+```text
+                    GitHub Repository
+                           |
+                           |
+                    GitHub Actions (CI/CD)
+                           |
+                           |
+                           v
+                 Amazon Elastic Container Registry
+                           |
+                           |
+                           v
+                  Amazon ECS (Fargate)
+                           |
+                           |
+              Application Load Balancer
+                           |
+                           |
+                           v
+                      Streamlit App
+                           |
+                 +---------+---------+
+                 |                   |
+                 |                   |
+                 v                   v
+         Amazon RDS           Amazon S3
+      (Analytics Data)      (Datasets & Assets)
 
-- Automated YouTube API ingestion via channel URL
-- Daily metric refresh with caching
-- Campaign-level reporting
-- Cross-platform support (TikTok, Instagram)
-- Exportable PDF and CSV reports
+                           |
+                           |
+                           v
+                    Amazon CloudWatch
+                 (Logs & Monitoring)
+```
 
-## Disclaimer
+---
 
-All metrics are estimates derived from publicly available data and provided inputs. They should be used as decision-support tools, not guarantees of campaign outcomes.
+# ☁️ Future Cloud Deployment
+
+Although the current version of the application runs locally using Streamlit, the long-term vision is to deploy it as a scalable cloud-native analytics platform on Amazon Web Services (AWS).
+
+The planned deployment architecture includes:
+
+- Amazon ECS (Fargate) for hosting the containerized application
+- Amazon ECR for Docker image storage
+- Amazon S3 for datasets and static assets
+- Amazon RDS (PostgreSQL) for persistent storage
+- Application Load Balancer (ALB)
+- Amazon CloudWatch for monitoring and logging
+- GitHub Actions for CI/CD automation
+
+---
+
+# 📈 Future Enhancements
+
+## Cloud Engineering
+
+- Deploy the application to AWS
+- Containerize the application using Docker
+- Implement Infrastructure as Code
+- Configure CI/CD pipelines
+- Add monitoring and logging
+- Improve application scalability
+
+## Analytics
+
+- Support multiple datasets
+- Historical analytics
+- Export reports
+- Advanced KPI calculations
+- Enhanced interactive filtering
+
+## Integrations
+
+- YouTube Data API
+- Authentication and user accounts
+- Scheduled data refreshes
+- PostgreSQL database
+- REST API backend
+
+## FinOps
+
+As I continue learning Cloud Engineering, I also plan to incorporate FinOps principles by:
+
+- Monitoring cloud resource usage
+- Understanding AWS pricing models
+- Optimising infrastructure for cost efficiency
+- Tracking cloud resource consumption
+- Exploring budgeting and cloud cost reporting
+
+---
+
+# 🎯 Learning Objectives
+
+This repository serves as a practical learning project for applying software engineering and cloud computing concepts.
+
+Current focus areas include:
+
+- Python application development
+- Interactive dashboards
+- Data analysis
+- Data visualization
+
+Future focus areas include:
+
+- Docker
+- Cloud-native applications
+- AWS
+- Infrastructure as Code
+- CI/CD
+- Monitoring & Observability
+- Cloud Cost Optimization (FinOps)
+
+---
+
+# 🛣️ Project Roadmap
+
+- [x] Build an interactive Streamlit dashboard
+- [x] Perform data cleaning with Pandas
+- [x] Create interactive visualisations
+- [x] Publish project on GitHub
+- [ ] Containerize using Docker
+- [ ] Deploy to AWS
+- [ ] Add PostgreSQL backend
+- [ ] Integrate the YouTube Data API
+- [ ] Implement GitHub Actions CI/CD
+- [ ] Add authentication
+- [ ] Configure Amazon CloudWatch monitoring
+- [ ] Explore FinOps cost optimisation techniques
+
+---
+
+# 📜 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👤 Author
+
+**Thando Majola**
+
+GitHub: https://github.com/Thando-init
+
+---
+
+> **Note:** This repository is an evolving portfolio project and will continue to grow as I expand my skills in Cloud Engineering, AWS, distributed systems, and FinOps.
